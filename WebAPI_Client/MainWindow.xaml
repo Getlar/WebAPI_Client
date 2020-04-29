@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:WebAPI_Client"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid RenderTransformOrigin="0.311,0.493">
+        <ListBox HorizontalAlignment="Left" Height="368" Margin="38,23,0,0" VerticalAlignment="Top" Width="419" x:Name="PeopleListBox" SelectionChanged="PeopleListBox_SelectionChanged" SelectionMode="Single"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="583,60,0,0" VerticalAlignment="Top" Width="75" x:Name="AddPersonButton" Click="AddPersonButton_Click"/>
+
     </Grid>
 </Window>

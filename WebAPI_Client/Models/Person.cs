@@ -12,5 +12,10 @@ namespace WebAPI_Client.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public DateTime dateOfBirth { get; set; }
+
+        public override string ToString()
+        {
+            return $"{firstName} {lastName}";
+        }
     }
 }
