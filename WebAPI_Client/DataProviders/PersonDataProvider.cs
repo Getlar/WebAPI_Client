@@ -51,7 +51,7 @@ namespace WebAPI_Client.DataProviders
             {
                 var rawData = JsonConvert.SerializeObject(person);
                 var content = new StringContent(rawData, Encoding.UTF8, "application/json");
-                var response = client.PutAsync(url, content).Result;
+                var response = client.PutAsync(url + "/" + person.Id, content).Result;
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new InvalidOperationException(response.Content.ToString());
