@@ -26,6 +26,7 @@ namespace WebAPI_Client
 
         public MainWindow()
         {
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             UpdatePeople();
         }
@@ -39,9 +40,9 @@ namespace WebAPI_Client
             }
         }
 
-        private void PeopleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void todayPeople_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedPerson = PeopleListBox.SelectedItem as Person;
+            var selectedPerson = todayPeople.SelectedItem as Person;
             if (selectedPerson != null)
             {
                 var window = new Window1(selectedPerson);
@@ -49,14 +50,67 @@ namespace WebAPI_Client
                 {
                     UpdatePeople();
                 }
-                PeopleListBox.UnselectAll();
+                todayPeople.UnselectAll();
+            }
+        }
+        private void futurePeople_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedPerson = futurePeople.SelectedItem as Person;
+            if (selectedPerson != null)
+            {
+                var window = new Window1(selectedPerson);
+                if (window.ShowDialog() ?? false)
+                {
+                    UpdatePeople();
+                }
+                futurePeople.UnselectAll();
+            }
+        }
+        private void diagnosedPeople_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedPerson = diagnosedPeople.SelectedItem as Person;
+            if (selectedPerson != null)
+            {
+                var window = new Window1(selectedPerson);
+                if (window.ShowDialog() ?? false)
+                {
+                    UpdatePeople();
+                }
+                diagnosedPeople.UnselectAll();
             }
         }
 
         private void UpdatePeople()
         {
             people = PersonDataProvider.GetPeople();
-            PeopleListBox.ItemsSource = people;
+            DateTime ActualTime = DateTime.Now;
+            dateText.Content = "Today's date is: " + ActualTime.ToShortDateString().ToString();
+            List<Person> SortedList = people.OrderBy(o => o.DateOfArrival).ToList();
+            List<Person> TodaysList = new List<Person>();
+            List<Person> FutureList = new List<Person>();
+            List<Person> DiagnosedList = new List<Person>();
+            foreach(Person p in SortedList)
+            {
+                if (p.Diagnosis == null)
+                {
+                    if (p.DateOfArrival.ToShortDateString() == ActualTime.ToShortDateString())
+                    {
+                        TodaysList.Add(p);
+                    }
+                    else
+                    {
+                        FutureList.Add(p);
+                    }
+                }
+                else
+                {
+                    DiagnosedList.Add(p);
+                }
+            }
+            todayPeople.ItemsSource = TodaysList;
+            futurePeople.ItemsSource = FutureList;
+            diagnosedPeople.ItemsSource = DiagnosedList;
         }
+
     }
 }

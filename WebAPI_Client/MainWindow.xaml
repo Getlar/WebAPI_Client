@@ -5,10 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WebAPI_Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid RenderTransformOrigin="0.311,0.493">
-        <ListBox HorizontalAlignment="Left" Height="368" Margin="38,23,0,0" VerticalAlignment="Top" Width="419" x:Name="PeopleListBox" SelectionChanged="PeopleListBox_SelectionChanged" SelectionMode="Single"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="583,60,0,0" VerticalAlignment="Top" Width="75" x:Name="AddPersonButton" Click="AddPersonButton_Click"/>
-
+        Title="HealthCare - Doctor" Height="900" Width="1000" FontSize="15">
+    <Grid  Background="#403A39">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <Label Content="Welcome Back Doctor!" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 50 0 0" VerticalAlignment="Center" FontSize="60" Foreground="White"/>
+            <Label x:Name="dateText" Margin="20" HorizontalAlignment="Center" Foreground="White" FontSize="20"></Label>
+            <Separator Margin="20 0 20 10"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Background="#403A39">
+                <Label Content="Today's Assignments" HorizontalAlignment="Center" Foreground="White" FontSize="20"></Label>
+                <ListBox HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" x:Name="todayPeople" SelectionChanged="todayPeople_SelectionChanged" SelectionMode="Single" Height="200" Width="400"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Background="#403A39">
+                <Label Content="Upcoming Assignments" HorizontalAlignment="Center" Foreground="White" FontSize="20"></Label>
+                <ListBox HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" x:Name="futurePeople" SelectionChanged="futurePeople_SelectionChanged" SelectionMode="Single" Height="200" Width="400"/>
+            </StackPanel>
+        </Grid>
+        
+        <Grid Grid.Row="2">
+            <Separator Margin="20 -260 20 0"/>
+            <Label Content="Already Diagnosed People" HorizontalAlignment="Center" Foreground="White" Margin="0 40 0 0" FontSize="20"></Label>
+            <ListBox HorizontalAlignment="Center" Margin="0 80 0 0" VerticalAlignment="Top" x:Name="diagnosedPeople" SelectionChanged="diagnosedPeople_SelectionChanged" SelectionMode="Single" Height="250" Width="400"/>
+        </Grid>
     </Grid>
 </Window>

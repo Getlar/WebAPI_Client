@@ -26,21 +26,22 @@ namespace WebAPI_Client
         public Window1(Person person)
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            if (person.Diagnosis != null)
+            {
+                DiagnosisTextBox.IsReadOnly = true;
+            }
             if (person != null)
             {
                 _person = person;
-                FirstNameTextBox.Text = _person.firstName;
-                LastNameTextBox.Text = _person.lastName;
-                DateTextBox.SelectedDate = _person.dateOfBirth;
-                CreateButton.Visibility = Visibility.Collapsed;
+                FirstNameTextBox.Text = _person.FirstName;
+                LastNameTextBox.Text = _person.LastName;
+                DateTextBox.Text = _person.DateOfBirth.ToShortDateString();
+                AddressTextBox.Text = _person.Address;
+                SocialSecurityNumberTextBox.Text = _person.SocialSecurityNumber;
+                ComplaintTextBox.Text = _person.Complaint;
+                DiagnosisTextBox.Text = _person.Diagnosis;
             }
-            else
-            {
-                _person = new Person();
-                UpdateButton.Visibility = Visibility.Collapsed;
-                DeleteButton.Visibility = Visibility.Collapsed;
-            }
-            
         }
 
 
@@ -48,10 +49,7 @@ namespace WebAPI_Client
         {
             if (ValidatePerson())
             {
-                _person.firstName = FirstNameTextBox.Text;
-                _person.lastName = LastNameTextBox.Text;
-                _person.dateOfBirth = DateTextBox.SelectedDate.Value;
-
+                _person.Diagnosis = DiagnosisTextBox.Text;
                 PersonDataProvider.UpdatePerson(_person);
                 DialogResult = true;
                 Close();
@@ -60,23 +58,9 @@ namespace WebAPI_Client
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("Do you really my man?","Question",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if(MessageBox.Show("Do you really want to delete the selected patient?","Question",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                PersonDataProvider.DeletePerson(_person.id);
-                DialogResult = true;
-                Close();
-            }
-        }
-
-        private void CreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (ValidatePerson())
-            {
-                _person.firstName = FirstNameTextBox.Text;
-                _person.lastName = LastNameTextBox.Text;
-                _person.dateOfBirth = DateTextBox.SelectedDate.Value;
-
-                PersonDataProvider.CreatePerson(_person);
+                PersonDataProvider.DeletePerson(_person.Id);
                 DialogResult = true;
                 Close();
             }
@@ -84,18 +68,8 @@ namespace WebAPI_Client
 
         private bool ValidatePerson()
         {
-            if (string.IsNullOrEmpty(FirstNameTextBox.Text)) {
-                MessageBox.Show("First name should not be empty");
-                return false;
-            }
-            if (string.IsNullOrEmpty(LastNameTextBox.Text))
-            {
-                MessageBox.Show("Last name should not be empty");
-                return false;
-            }
-            if (!DateTextBox.SelectedDate.HasValue)
-            {
-                MessageBox.Show("Date should not be empty");
+            if (string.IsNullOrEmpty(DiagnosisTextBox.Text)) {
+                MessageBox.Show("Please add diagnosis!");
                 return false;
             }
             return true;
