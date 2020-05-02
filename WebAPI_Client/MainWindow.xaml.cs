@@ -34,7 +34,7 @@ namespace WebAPI_Client
 
         private void AddPersonButton_Click(object sender, RoutedEventArgs e)
         {
-            var window = new Window1(null);
+            var window = new Window1(null, false);
             if (window.ShowDialog() ?? false)
             {
                 UpdatePeople();
@@ -46,7 +46,7 @@ namespace WebAPI_Client
             var selectedPerson = todayPeople.SelectedItem as Person;
             if (selectedPerson != null)
             {
-                var window = new Window1(selectedPerson);
+                var window = new Window1(selectedPerson, false);
                 if (window.ShowDialog() ?? false)
                 {
                     UpdatePeople();
@@ -59,7 +59,7 @@ namespace WebAPI_Client
             var selectedPerson = futurePeople.SelectedItem as Person;
             if (selectedPerson != null)
             {
-                var window = new Window1(selectedPerson);
+                var window = new Window1(selectedPerson, true);
                 if (window.ShowDialog() ?? false)
                 {
                     UpdatePeople();
@@ -72,7 +72,7 @@ namespace WebAPI_Client
             var selectedPerson = diagnosedPeople.SelectedItem as Person;
             if (selectedPerson != null)
             {
-                var window = new Window1(selectedPerson);
+                var window = new Window1(selectedPerson, false);
                 if (window.ShowDialog() ?? false)
                 {
                     UpdatePeople();
