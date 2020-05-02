@@ -24,10 +24,11 @@ namespace WebAPI_Client
     {
         private IList<Person> people;
 
-        public MainWindow()
+        public MainWindow(string Text)
         {
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
+            nameText.Content = "Welcome Back " + Text + "!";
             UpdatePeople();
         }
 
@@ -112,5 +113,9 @@ namespace WebAPI_Client
             diagnosedPeople.ItemsSource = DiagnosedList;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            UpdatePeople();
+        }
     }
 }

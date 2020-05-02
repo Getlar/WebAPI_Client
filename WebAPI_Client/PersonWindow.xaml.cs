@@ -30,6 +30,7 @@ namespace WebAPI_Client
             if (person.Diagnosis != null)
             {
                 DiagnosisTextBox.IsReadOnly = true;
+                AddDiagnosisButton.Visibility = Visibility.Collapsed;
             }
             if (person != null)
             {
