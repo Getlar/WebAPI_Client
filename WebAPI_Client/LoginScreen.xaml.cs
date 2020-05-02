@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace WebAPI_Client
     /// </summary>
     public partial class LoginScreen : Window
     {
+        private int tries = 0;
         public LoginScreen()
         {
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -43,13 +45,19 @@ namespace WebAPI_Client
                 int count = Convert.ToInt32(command.ExecuteScalar());
                 if (count == 1)
                 {
-                    MainWindow mainwin = new MainWindow();
+                    MainWindow mainwin = new MainWindow(userName.Text.ToString());
                     mainwin.Show();
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Incorrect Credentials!");
+                    tries++;
+                    int left = 5 - tries;
+                    if (left == 0)
+                    {
+                        Process.GetCurrentProcess().Kill();
+                    }
+                    MessageBox.Show("Incorrect Credentials!\nYou have " + left + " tries left!", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
