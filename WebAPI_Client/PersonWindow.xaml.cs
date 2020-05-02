@@ -23,7 +23,7 @@ namespace WebAPI_Client
     public partial class Window1 : Window
     {
         private readonly Person _person;
-        public Window1(Person person)
+        public Window1(Person person, bool Future)
         {
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -42,6 +42,11 @@ namespace WebAPI_Client
                 SocialSecurityNumberTextBox.Text = _person.SocialSecurityNumber;
                 ComplaintTextBox.Text = _person.Complaint;
                 DiagnosisTextBox.Text = _person.Diagnosis;
+            }
+            if (Future)
+            {
+                DiagnosisTextBox.IsReadOnly = true;
+                AddDiagnosisButton.Visibility = Visibility.Collapsed;
             }
         }
 
