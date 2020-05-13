@@ -5,7 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WebAPI_Client"
         mc:Ignorable="d"
-        Title="HealthCare - Doctor" Height="1080" Width="1000" FontSize="15">
+        Title="HealthCare - Doctor" Height="1080" Width="1400" FontSize="15">
+    <Window.Resources>
+        <Style x:Key="ButtonTemplate" TargetType="Button">
+        <Setter Property="Background" Value="#333333" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="White" HorizontalAlignment="Left" Margin="17,0,0,0" Data="F1 M 30.0833,22.1667L 50.6665,37.6043L 50.6665,38.7918L 30.0833,53.8333L 30.0833,22.1667 Z "/>
+                            <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#222222" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter TargetName="PathIcon" Property="Fill" Value="White" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#222222" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    </Window.Resources>
     <Grid  Background="#403A39">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -13,11 +47,11 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <Label x:Name="nameText" Content="Welcome Back Doctor!" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 50 0 0" VerticalAlignment="Center" FontSize="60" Foreground="White"/>
+            <Label x:Name="nameText" Content="Welcome Back Doctor!" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 20 0 0" VerticalAlignment="Center" FontSize="60" Foreground="White"/>
             <Image Height="100" Width="100" Margin="0 30 0 0" Source="Images/med3.png">
             </Image>
-            <Label x:Name="dateText" Margin="10" HorizontalAlignment="Center" Foreground="White" FontSize="20"></Label>
-            <Button Content="Refresh" Width="100" Margin="10" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" Click="Button_Click"/>
+            <Label x:Name="dateText" Margin="10" HorizontalAlignment="Center" Foreground="White" FontSize="20" FontWeight="SemiBold"></Label>
+            <Button Style="{StaticResource ButtonTemplate}" Content="Refresh" Width="200" Height="30" Margin="10" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" Click="Button_Click"/>
             <Separator Margin="20 0 20 10"/>
         </StackPanel>
         <Grid Grid.Row="1">
@@ -26,23 +60,164 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Background="#403A39">
-                <Label Content="Today's Assignments" HorizontalAlignment="Center" Foreground="White" FontSize="20"></Label>
-                <ListBox HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" x:Name="todayPeople" SelectionChanged="todayPeople_SelectionChanged" SelectionMode="Single" Height="200" Width="400"/>
+                <Label Content="Today's Assignments:" HorizontalAlignment="Center" Foreground="White" FontSize="20" FontWeight="SemiBold"></Label>
+                <DataGrid AutoGenerateColumns="True" x:Name="PatientTodayDataGrid" Width="600" Height="230" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" SelectionChanged="todayPeople_SelectionChanged" SelectionMode="Single" CanUserAddRows="False">
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="#D1CFCE"></Setter>
+                            <Setter Property="FontWeight" Value="SemiBold"></Setter>
+                            <Setter Property="BorderThickness" Value="0,0,1,2"></Setter>
+                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                            <Setter Property="Foreground" Value="Black"></Setter>
+                            <Setter Property="Height" Value="35"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                        </Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="RowHeaderWidth" Value="0"/>
+                            <Setter Property="Background" Value="#333333"></Setter>
+                        </Style>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Height" Value="28"></Setter>
+                            <Setter Property="Background" Value="#333333"></Setter>
+                            <Setter Property="Foreground" Value="White"></Setter>
+                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                            <Setter Property="BorderThickness" Value="0.1"></Setter>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                            <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+                            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+                            <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#D1CFCE"></Setter>
+                                    <Setter Property="Foreground" Value="Black"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="" Width="40" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="Images/med2.png"></Image>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Patient First Name" Binding="{Binding FirstName}" Width="*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Patient Last Name" Binding="{Binding LastName}" Width="*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Arrival Time" Binding="{Binding DateOfArrival}"  Width="*"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
             <StackPanel Grid.Column="1" Background="#403A39">
-                <Label Content="Upcoming Assignments" HorizontalAlignment="Center" Foreground="White" FontSize="20"></Label>
-                <ListBox HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" x:Name="futurePeople" SelectionChanged="futurePeople_SelectionChanged" SelectionMode="Single" Height="200" Width="400"/>
+                <Label Content="Upcoming Assignments:" HorizontalAlignment="Center" Foreground="White" FontSize="20" FontWeight="SemiBold"></Label>
+                <DataGrid AutoGenerateColumns="True" x:Name="PatientLaterDataGrid" Width="600" Height="230" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Top" SelectionChanged="futurePeople_SelectionChanged" SelectionMode="Single" CanUserAddRows="False">
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="#D1CFCE"></Setter>
+                            <Setter Property="FontWeight" Value="SemiBold"></Setter>
+                            <Setter Property="BorderThickness" Value="0,0,1,2"></Setter>
+                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                            <Setter Property="Foreground" Value="Black"></Setter>
+                            <Setter Property="Height" Value="35"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                        </Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="RowHeaderWidth" Value="0"/>
+                            <Setter Property="Background" Value="#333333"></Setter>
+                        </Style>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Height" Value="28"></Setter>
+                            <Setter Property="Background" Value="#333333"></Setter>
+                            <Setter Property="Foreground" Value="White"></Setter>
+                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                            <Setter Property="BorderThickness" Value="0.1"></Setter>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                            <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+                            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+                            <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#D1CFCE"></Setter>
+                                    <Setter Property="Foreground" Value="Black"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="" Width="40" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="Images/med4.png"></Image>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Patient First Name" Binding="{Binding FirstName}" Width="*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Patient Last Name" Binding="{Binding LastName}" Width="*"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Arrival Time" Binding="{Binding DateOfArrival}"  Width="*"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row="2">
-            <Image Height="500" Width="260" Margin="500 -50 -200 0" Source="Images/med.png">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Height="500" Width="260" Margin="1050,-50,16.334,0" Source="Images/sziv.png" Grid.Column="1">
             </Image>
-            <Image Height="500" Width="260" Margin="-900 -50 -200 0" Source="Images/med.png">
+            <Image Height="500" Width="260" Margin="-850,-50,206.667,0" Source="Images/sziv.png">
             </Image>
-            <Label Content="Already Diagnosed People" HorizontalAlignment="Center" Foreground="White" Margin="0 40 0 0" FontSize="20"></Label>
-            <ListBox HorizontalAlignment="Center" Margin="0 80 0 0" VerticalAlignment="Top" x:Name="diagnosedPeople" SelectionChanged="diagnosedPeople_SelectionChanged" SelectionMode="Single" Height="250" Width="400"/>
-            <Separator Margin="20 300 20 0"/>
+            <Label Content="Already Diagnosed People:" HorizontalAlignment="Center" Foreground="White" Margin="376,60,375.334,0" FontSize="20" Grid.ColumnSpan="2" FontWeight="SemiBold"></Label>
+            <DataGrid AutoGenerateColumns="True" x:Name="PatientDiagnosedDataGrid" Width="600" Height="230" HorizontalAlignment="Center" Margin="10" SelectionChanged="diagnosedPeople_SelectionChanged" SelectionMode="Single" CanUserAddRows="False">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="#D1CFCE"></Setter>
+                        <Setter Property="FontWeight" Value="SemiBold"></Setter>
+                        <Setter Property="BorderThickness" Value="0,0,1,2"></Setter>
+                        <Setter Property="BorderBrush" Value="Black"></Setter>
+                        <Setter Property="Foreground" Value="Black"></Setter>
+                        <Setter Property="Height" Value="35"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                    </Style>
+                    <Style TargetType="{x:Type DataGrid}">
+                        <Setter Property="RowHeaderWidth" Value="0"/>
+                        <Setter Property="Background" Value="#333333"></Setter>
+                    </Style>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Height" Value="28"></Setter>
+                        <Setter Property="Background" Value="#333333"></Setter>
+                        <Setter Property="Foreground" Value="White"></Setter>
+                        <Setter Property="BorderBrush" Value="Black"></Setter>
+                        <Setter Property="BorderThickness" Value="0.1"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+                        <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#D1CFCE"></Setter>
+                                <Setter Property="Foreground" Value="Black"></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="" Width="40" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="Images/med5.png"></Image>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Patient First Name" Binding="{Binding FirstName}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Patient Last Name" Binding="{Binding LastName}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Diagnosed" Binding="{Binding DateOfArrival}"  Width="*"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Separator Margin="20,300,20.334,0" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>
 </Window>

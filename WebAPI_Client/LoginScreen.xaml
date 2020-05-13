@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WebAPI_Client"
         mc:Ignorable="d"
         Icon="health.ico"
-        Title="HealthCare - Doctor" Height="400" Width="300" FontSize="14" Background="#9F3B25">
+        Title="HealthCare - Doctor" Height="400" Width="300" FontSize="14" Background="#D1CFCE">
     <Border Background="#403A39" CornerRadius="20" Margin="20">
         <StackPanel Margin="25">
             <Label Content="Login" Foreground="White" FontSize="25" HorizontalAlignment="Center"></Label>

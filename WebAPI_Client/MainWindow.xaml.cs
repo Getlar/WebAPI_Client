@@ -43,7 +43,7 @@ namespace WebAPI_Client
 
         private void todayPeople_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedPerson = todayPeople.SelectedItem as Person;
+            var selectedPerson = PatientTodayDataGrid.SelectedItem as Person;
             if (selectedPerson != null)
             {
                 var window = new Window1(selectedPerson, false);
@@ -51,12 +51,12 @@ namespace WebAPI_Client
                 {
                     UpdatePeople();
                 }
-                todayPeople.UnselectAll();
+                PatientTodayDataGrid.UnselectAll();
             }
         }
         private void futurePeople_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedPerson = futurePeople.SelectedItem as Person;
+            var selectedPerson = PatientLaterDataGrid.SelectedItem as Person;
             if (selectedPerson != null)
             {
                 var window = new Window1(selectedPerson, true);
@@ -64,12 +64,12 @@ namespace WebAPI_Client
                 {
                     UpdatePeople();
                 }
-                futurePeople.UnselectAll();
+                PatientLaterDataGrid.UnselectAll();
             }
         }
         private void diagnosedPeople_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedPerson = diagnosedPeople.SelectedItem as Person;
+            var selectedPerson = PatientDiagnosedDataGrid.SelectedItem as Person;
             if (selectedPerson != null)
             {
                 var window = new Window1(selectedPerson, false);
@@ -77,7 +77,7 @@ namespace WebAPI_Client
                 {
                     UpdatePeople();
                 }
-                diagnosedPeople.UnselectAll();
+                PatientDiagnosedDataGrid.UnselectAll();
             }
         }
 
@@ -87,30 +87,27 @@ namespace WebAPI_Client
             DateTime ActualTime = DateTime.Now;
             dateText.Content = "Today's date is: " + ActualTime.ToShortDateString().ToString();
             List<Person> SortedList = people.OrderBy(o => o.DateOfArrival).ToList();
-            List<Person> TodaysList = new List<Person>();
-            List<Person> FutureList = new List<Person>();
-            List<Person> DiagnosedList = new List<Person>();
+            PatientDiagnosedDataGrid.Items.Clear();
+            PatientLaterDataGrid.Items.Clear();
+            PatientTodayDataGrid.Items.Clear();
             foreach(Person p in SortedList)
             {
                 if (p.Diagnosis == null)
                 {
                     if (p.DateOfArrival.ToShortDateString() == ActualTime.ToShortDateString())
                     {
-                        TodaysList.Add(p);
+                        PatientTodayDataGrid.Items.Add(p);
                     }
                     else
                     {
-                        FutureList.Add(p);
+                        PatientLaterDataGrid.Items.Add(p);
                     }
                 }
                 else
                 {
-                    DiagnosedList.Add(p);
+                    PatientDiagnosedDataGrid.Items.Add(p);
                 }
             }
-            todayPeople.ItemsSource = TodaysList;
-            futurePeople.ItemsSource = FutureList;
-            diagnosedPeople.ItemsSource = DiagnosedList;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -6,6 +6,62 @@
         xmlns:local="clr-namespace:WebAPI_Client"
         mc:Ignorable="d"
         Title="HealthCare - Doctor" Height="460" Width="800">
+    <Window.Resources>
+    <Style x:Key="ButtonTemplate" TargetType="Button">
+        <Setter Property="Background" Value="#373737" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="White" HorizontalAlignment="Left" Margin="17,0,0,0" Data="F1 M 30.0833,22.1667L 50.6665,37.6043L 50.6665,38.7918L 30.0833,53.8333L 30.0833,22.1667 Z "/>
+                            <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#D1CFCE"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter TargetName="PathIcon" Property="Fill" Value="Black" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#D1CFCE"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TextBoxTemplate" TargetType="TextBox">
+        <Setter Property="Background" Value="#333333"></Setter>
+        <Setter Property="FontWeight" Value="SemiBold"></Setter>
+        <Setter Property="BorderThickness" Value="1,1,1,1"></Setter>
+        <Setter Property="BorderBrush" Value="Black"></Setter>
+        <Setter Property="FontWeight" Value="SemiBold"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#D1CFCE"></Setter>
+                    <Setter Property="Foreground" Value="Black"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="DateBoxTemplate" TargetType="DatePicker">
+        <Setter Property="Background" Value="#333333"></Setter>
+        <Setter Property="FontWeight" Value="SemiBold"></Setter>
+        <Setter Property="BorderThickness" Value="1,1,1,1"></Setter>
+        <Setter Property="BorderBrush" Value="Black"></Setter>
+        <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="FontWeight" Value="SemiBold"></Setter>
+    </Style>
+    </Window.Resources>
     <Grid Background="#403A39">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -25,31 +81,31 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" Content="First Name:" Margin="10" Foreground="White" FontSize="16"/>
-            <TextBox Grid.Column="1" Grid.Row="0" x:Name="FirstNameTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
+            <Label Grid.Column="0" Grid.Row="0" Content="First Name:" Margin="10" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+            <TextBox Style="{StaticResource TextBoxTemplate}" Grid.Column="1" Grid.Row="0" x:Name="FirstNameTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
 
-            <Label Grid.Column="0" Grid.Row="1" Content="Last Name:" Margin="10" Foreground="White" FontSize="16"/>
-            <TextBox Grid.Column="1" Grid.Row="1" x:Name="LastNameTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="Last Name:" Margin="10" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+            <TextBox Style="{StaticResource TextBoxTemplate}" Grid.Column="1" Grid.Row="1" x:Name="LastNameTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
 
-            <Label Grid.Column="0" Grid.Row="2" Content="Date Of Birth:" Margin="10" Foreground="White" FontSize="16"/>
-            <TextBox Grid.Column="1" Grid.Row="2" x:Name="DateTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
+            <Label Grid.Column="0" Grid.Row="2" Content="Date Of Birth:" Margin="10" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+            <TextBox Style="{StaticResource TextBoxTemplate}" Grid.Column="1" Grid.Row="2" x:Name="DateTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
 
-            <Label Grid.Column="0" Grid.Row="3" Content="Address:" Margin="10" Foreground="White" FontSize="16"/>
-            <TextBox Grid.Column="1" Grid.Row="3" x:Name="AddressTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
+            <Label Grid.Column="0" Grid.Row="3" Content="Address:" Margin="10" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+            <TextBox Style="{StaticResource TextBoxTemplate}" Grid.Column="1" Grid.Row="3" x:Name="AddressTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
 
             <Label Grid.Column="0" Grid.Row="4" Content="Social Security Number:" Margin="10" Foreground="White" FontSize="16"/>
-            <TextBox Grid.Column="1" Grid.Row="4" x:Name="SocialSecurityNumberTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
+            <TextBox Style="{StaticResource TextBoxTemplate}" Grid.Column="1" Grid.Row="4" x:Name="SocialSecurityNumberTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
 
-            <Label Grid.Column="0" Grid.Row="5" Content="Complaint:" Margin="10" Foreground="White" FontSize="16"/>
-            <TextBox Grid.Column="1" Grid.Row="5" x:Name="ComplaintTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
+            <Label Grid.Column="0" Grid.Row="5" Content="Complaint:" Margin="10" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+            <TextBox Style="{StaticResource TextBoxTemplate}" Grid.Column="1" Grid.Row="5" x:Name="ComplaintTextBox" Margin="0, 15, 15, 15" IsReadOnly="True"/>
 
-            <Label Grid.Column="0" Grid.Row="6" Content="Diagnosis:" Margin="10" Foreground="White" FontSize="16"/>
-            <TextBox Grid.Column="1" Grid.Row="6" x:Name="DiagnosisTextBox" Margin="0, 15, 15, 15"/>
+            <Label Grid.Column="0" Grid.Row="6" Content="Diagnosis:" Margin="10" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+            <TextBox Style="{StaticResource TextBoxTemplate}" Grid.Column="1" Grid.Row="6" x:Name="DiagnosisTextBox" Margin="0, 15, 15, 15"/>
 
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Button x:Name="AddDiagnosisButton" Content="Diagnose Patient" Width="150" Height="30" Margin="20 0 20 25" Click="UpdateButton_Click" FontSize="16"/>
-            <Button x:Name="DeleteButton" Content="Delete Patient" Width="150" Height="30" Margin="20 0 20 25" Click="DeleteButton_Click" FontSize="16"/>
+            <Button Style="{StaticResource ButtonTemplate}" x:Name="AddDiagnosisButton" Content="Diagnose Patient" Width="200" Height="40" Margin="20 0 20 25" Click="UpdateButton_Click" FontSize="16"/>
+            <Button Style="{StaticResource ButtonTemplate}" x:Name="DeleteButton" Content="Delete Patient" Width="200" Height="40" Margin="20 0 20 25" Click="DeleteButton_Click" FontSize="16"/>
         </StackPanel>
     </Grid>
 </Window>
