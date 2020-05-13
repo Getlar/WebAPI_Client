@@ -51,6 +51,8 @@ namespace WebAPI_Client
                 }
                 else
                 {
+                    userName.Text = "";
+                    passWord.Password = "";
                     tries++;
                     int left = 5 - tries;
                     if (left == 0)
